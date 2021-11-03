@@ -1,48 +1,4 @@
-// import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-// import {
-//   getFirestore,
-//   collection,
-//   addDoc,
-//   doc,
-//   deleteDoc,
-//   getDocs,
-// } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
-
-// //Add your own config content
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyARqljuS5yf86OHAp8H1u9q0j6I6m1Scss',
-//   authDomain: 'quiz-01-2c676.firebaseapp.com',
-//   projectId: 'quiz-01-2c676',
-//   storageBucket: 'quiz-01-2c676.appspot.com',
-//   messagingSenderId: '180059847819',
-//   appId: '1:180059847819:web:768ec49d4e155787f9688e',
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-
-//Add to firebase
-// async function addAnswer(){
-//   var clickedItem = document.getElementById("01");
-//   if()
-//     try {
-//       const docRef = await addDoc(collection(db, "01"), {
-//         name: name,
-//       });
-//       displayNamesInList("listOfNames");
-//     } catch (e) {
-//       console.error("Error adding document: ", e);
-//     }
-// }
-
-// function readInput(id) {
-//   if (!document.getElementById(id) && !document.getElementById(id).value)
-//     return null;
-
-//   return document.getElementById(id).value;
-// }
-
-const imageCards = document.getElementById('cards');
+const imageCards = document.getElementById('cardsContainer');
 const question = document.getElementById('question');
 const quizTitle = document.getElementById('quiz-title');
 const popup = document.getElementById('popup');
@@ -53,19 +9,19 @@ let score = 0;
 const silhouetteImg = [
   {
     id: '01',
-    source: './images/Luke.png',
+    img: './images/Luke.png',
   },
   {
     id: '02',
-    source: './images/Ichigo.png',
+    img: './images/Ichigo.png',
   },
   {
     id: '03',
-    source: './images/Naruto.png',
+    img: './images/Naruto.png',
   },
   {
     id: '04',
-    source: './images/Yukimaru.png',
+    img: './images/Yukimaru.png',
   },
 ];
 
@@ -88,6 +44,34 @@ const questionAndAnswer = [
   },
 ];
 
+const animalSound = [
+  {
+    src: 'data/Elephant-trumpeting.wav',
+    animal: 'Elephant',
+    img: './images/Elephant.png',
+  },
+  {
+    src: 'data/Goat.wav',
+    animal: 'Goat',
+    img: './images/Goat.png',
+  },
+  {
+    src: 'data/Leopard-growl.wav',
+    animal: 'Leopard',
+    img: './images/Leopard.png',
+  },
+  {
+    src: 'data/Pig-squeal.wav',
+    animal: 'Pig',
+    img: './images/Pig.png',
+  },
+  {
+    src: 'data/Tiger-growl.wav',
+    animal: 'Tiger',
+    img: './images/Tiger.png',
+  },
+];
+
 function random(array) {
   let index = Math.floor(Math.random() * array.length);
   return index;
@@ -98,15 +82,25 @@ console.log(randomIndex);
 
 question.innerHTML = questionAndAnswer[randomIndex].question;
 
-function createCards(img) {
-  for (let i = 0; i < silhouetteImg.length; i++) {
-    img.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
-      silhouetteImg[i].source
-    }" onclick="onClick(this.id)" />`;
+// function createCards(img) {
+//   for (let i = 0; i < silhouetteImg.length; i++) {
+//     imageCards.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
+//       silhouetteImg[i].img
+//     }" onclick="onClick(this.id)" />`;
+//   }
+// }
+
+// createCards(imageCards);
+
+function createCards(imgArray) {
+  for (let i = 0; i < imgArray.length; i++) {
+    imageCards.innerHTML += `<div class="cards"><img class="imgBtn" id="0${
+      i + 1
+    }" src="${imgArray[i].img}" onclick="onClick(this.id)" /></div>`;
   }
 }
 
-createCards(imageCards);
+createCards(silhouetteImg);
 
 //add EventListener for clicking a card
 function onClick(clicked_id) {
@@ -139,16 +133,19 @@ function popupToggle() {
 function next() {
   const nextBtn = document.getElementById('nextBtn');
   nextBtn.addEventListener('click', () => {
-    const cardsContainer = document.getElementById('cardsContainer');
+    const cards = document.getElementById('cards');
     quizTitle.innerHTML = 'SOUND QUIZ';
-    cardsContainer.innerHTML = '';
+    cards.innerHTML = '';
     popup.classList.remove('active');
-    if (currentQuestion <= 1) {
+    if ((currentQuestion = 1)) {
       console.log('btn clicked');
 
       question.innerHTML = 'What animal is it?';
       const sound = document.getElementById('sound');
-      sound.innerHTML = `<audio><source src="data</audio>`;
+      sound.innerHTML = `<audio controls><source src="${
+        animalSound[random(animalSound)].src
+      }" type="audio/wav"></audio>`;
+      createCards(animalSound);
     }
   });
 }
