@@ -21,7 +21,7 @@ const silhouetteImg = [
   },
   {
     id: '04',
-    img: './images/Yukimaru.png',
+    img: './images/Levi.png',
   },
 ];
 
@@ -39,39 +39,50 @@ const questionAndAnswer = [
     correctId: '03',
   },
   {
-    question: '?',
+    question: 'Who fights against titans?',
     correctId: '04',
   },
 ];
 
-const animalSound = [
+const ghibliSound = [
   {
-    src: 'data/Elephant-trumpeting.wav',
-    animal: 'Elephant',
-    img: './images/Elephant.png',
+    src: 'data/hauru.mp3',
+    movie: 'Hawl',
+    img: './images/hauru.png',
   },
   {
-    src: 'data/Goat.wav',
-    animal: 'Goat',
-    img: './images/Goat.png',
+    src: 'data/kurenainobuta.mp3',
+    movie: 'Porco Rosso',
+    img: './images/kurenainobuta.png',
   },
   {
-    src: 'data/Leopard-growl.wav',
-    animal: 'Leopard',
-    img: './images/Leopard.png',
+    src: 'data/laputa.mp3',
+    movie: 'Castle in the Sky',
+    img: './images/laputa.png',
   },
   {
-    src: 'data/Pig-squeal.wav',
-    animal: 'Pig',
-    img: './images/Pig.png',
+    src: 'data/majo.mp3',
+    movie: 'Kikis Delivery Service',
+    img: './images/majo.png',
   },
   {
-    src: 'data/Tiger-growl.wav',
-    animal: 'Tiger',
-    img: './images/Tiger.png',
+    src: 'data/nausicaa.mp3',
+    movie: 'Nausicaa of the Valley of the Wind',
+    img: './images/nausicaa.png',
+  },
+  {
+    src: 'data/sentochihiro.mp3',
+    movie: 'Spirited Away',
+    img: './images/sentochihiro.png',
+  },
+  {
+    src: 'data/totoro.mp3',
+    movie: 'My Neighbor Totoro',
+    img: './images/totoro.png',
   },
 ];
 
+// Give random index number of array
 function random(array) {
   let index = Math.floor(Math.random() * array.length);
   return index;
@@ -89,18 +100,22 @@ question.innerHTML = questionAndAnswer[randomIndex].question;
 //     }" onclick="onClick(this.id)" />`;
 //   }
 // }
-
 // createCards(imageCards);
 
+// shows imgs
 function createCards(imgArray) {
   for (let i = 0; i < imgArray.length; i++) {
-    imageCards.innerHTML += `<div class="cards"><img class="imgBtn" id="0${
-      i + 1
-    }" src="${imgArray[i].img}" onclick="onClick(this.id)" /></div>`;
+    imageCards.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
+      imgArray[i].img
+    }" />`;
   }
 }
 
 createCards(silhouetteImg);
+
+let imgBtn = document.querySelectorAll('.imgBtn');
+console.log(imgBtn);
+imgBtn.forEach((e) => e.addEventListener('click', onClick));
 
 //add EventListener for clicking a card
 function onClick(clicked_id) {
@@ -130,22 +145,24 @@ function popupToggle() {
   popup.classList.toggle('active');
 }
 
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.addEventListener('click', next);
+
 function next() {
   const nextBtn = document.getElementById('nextBtn');
   nextBtn.addEventListener('click', () => {
-    const cards = document.getElementById('cards');
     quizTitle.innerHTML = 'SOUND QUIZ';
-    cards.innerHTML = '';
+    imageCards.innerHTML = '';
     popup.classList.remove('active');
     if ((currentQuestion = 1)) {
       console.log('btn clicked');
 
-      question.innerHTML = 'What animal is it?';
+      question.innerHTML = 'Which Ghibli movie is this song from?';
       const sound = document.getElementById('sound');
       sound.innerHTML = `<audio controls><source src="${
-        animalSound[random(animalSound)].src
+        ghibliSound[random(ghibliSound)].src
       }" type="audio/wav"></audio>`;
-      createCards(animalSound);
+      createCards(ghibliSound);
     }
   });
 }
