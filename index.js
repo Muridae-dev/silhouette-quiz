@@ -156,13 +156,15 @@ function popupToggle() {
   popup.classList.toggle('active');
 }
 
+// next button generator
 const nextBtn = document.getElementById('nextBtn');
 nextBtn.addEventListener('click', next);
 
+//popup comes up and goes to the next question
 function next() {
   const nextBtn = document.getElementById('nextBtn');
   nextBtn.addEventListener('click', () => {
-    quizTitle.innerHTML = 'Ghibli QUIZ';
+    quizTitle.innerHTML = 'Ghibli Intro QUIZ';
     imageCards.innerHTML = '';
     popup.classList.remove('active');
     if ((currentQuestion = 1)) {
@@ -172,9 +174,15 @@ function next() {
       const sound = document.getElementById('sound');
       randomIndex = random(ghibliSound);
       console.log('ghibli random is ', randomIndex);
+      //sound.innerHTML = `<img src = "./images/playBtn.png" onclick="playAudio('./${ghibliSound[randomIndex].src}')">`;
       sound.innerHTML = `<audio controls><source src="${ghibliSound[randomIndex].src}" type="audio/wav"></audio>`;
       createCards(ghibliSound);
       addEventListener();
     }
   });
 }
+
+// function playAudio(url) {
+//   new Audio(url).play();
+//   console.log('clicked play');
+// }
