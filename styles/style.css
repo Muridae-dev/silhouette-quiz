@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&display=swap");
 * {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Balsamiq Sans', cursive;
 }
 
 .container {
@@ -25,11 +27,25 @@
   font-size: 5rem;
   margin: 2rem 0;
   z-index: 100;
+  color: blueviolet;
 }
 
 .container #question {
   font-size: 2rem;
   margin: 2rem 0;
+  z-index: 99;
+  color: blueviolet;
+}
+
+.container #clickImage {
+  font-size: 1.5rem;
+  z-index: 97;
+  color: blueviolet;
+}
+
+.container #sound {
+  z-index: 98;
+  color: blueviolet;
 }
 
 .container .card-container {
@@ -55,7 +71,6 @@
 .imgBtn {
   position: absolute;
   width: 200px;
-  z-index: -1;
 }
 
 .imgBtn:nth-child(1) {
@@ -83,7 +98,7 @@
 }
 
 .imgBtn:nth-child(4) {
-  left: 60%;
+  left: 35%;
   -webkit-animation: animate 15s linear infinite;
           animation: animate 15s linear infinite;
   -webkit-animation-delay: -5s;
@@ -121,8 +136,8 @@
     opacity: 1;
   }
   20% {
-    -webkit-transform: translateX(-20px) rotate(45deg);
-            transform: translateX(-20px) rotate(45deg);
+    -webkit-transform: translateX(-20px) translateY(30px) rotate(45deg);
+            transform: translateX(-20px) translateY(30px) rotate(45deg);
   }
   40% {
     -webkit-transform: translateX(-20px) rotate(700deg);
@@ -154,8 +169,8 @@
     opacity: 1;
   }
   20% {
-    -webkit-transform: translateX(-20px) rotate(45deg);
-            transform: translateX(-20px) rotate(45deg);
+    -webkit-transform: translateX(-20px) translateY(30px) rotate(45deg);
+            transform: translateX(-20px) translateY(30px) rotate(45deg);
   }
   40% {
     -webkit-transform: translateX(-20px) rotate(700deg);
@@ -176,16 +191,22 @@
   }
 }
 
+.imgBtn:hover {
+  opacity: 0.8;
+}
+
 #popup {
   position: fixed;
-  color: black;
-  font-size: 2rem;
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 500;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   z-index: 100;
   background-color: blueviolet;
+  opacity: 0.9;
   width: 450px;
   padding: 50px 50px;
   -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.03);

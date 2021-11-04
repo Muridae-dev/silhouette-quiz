@@ -1,7 +1,9 @@
 const imageCards = document.getElementById('cardsContainer');
 const question = document.getElementById('question');
+const clickImage = document.getElementById('clickImage');
 const quizTitle = document.getElementById('quiz-title');
 const popup = document.getElementById('popup');
+//const body = document.getElementsByTagName('body');
 
 let currentQuestion = 0;
 let score = 0;
@@ -10,39 +12,43 @@ const silhouetteImg = [
   {
     id: '01',
     img: './images/Luke.png',
+    question: 'Which guy is from Death Note?',
   },
   {
     id: '02',
     img: './images/Ichigo.png',
+    question: 'Who is a Shinigami who has a sword named Zangetsu?',
   },
   {
     id: '03',
     img: './images/Naruto.png',
+    question: 'Who has a name which is a type of topping you put in ramen?',
   },
   {
     id: '04',
     img: './images/Levi.png',
+    question: 'Who fights against titans?',
   },
 ];
 
-const questionAndAnswer = [
-  {
-    question: 'Which guy is from Death Note?',
-    correctId: '01',
-  },
-  {
-    question: 'Who is a Shinigami who has a sword named Zangetsu?',
-    correctId: '02',
-  },
-  {
-    question: 'Who has a name which is a type of topping you put in ramen?',
-    correctId: '03',
-  },
-  {
-    question: 'Who fights against titans?',
-    correctId: '04',
-  },
-];
+// const questionAndAnswer = [
+//   {
+//     question: 'Which guy is from Death Note?',
+//     correctId: '01',
+//   },
+//   {
+//     question: 'Who is a Shinigami who has a sword named Zangetsu?',
+//     correctId: '02',
+//   },
+//   {
+//     question: 'Who has a name which is a type of topping you put in ramen?',
+//     correctId: '03',
+//   },
+//   {
+//     question: 'Who fights against titans?',
+//     correctId: '04',
+//   },
+// ];
 
 const ghibliSound = [
   {
@@ -82,16 +88,18 @@ const ghibliSound = [
   },
 ];
 
+document.body.style.backgroundColor = '#000';
+
 // Give random index number of array
 function random(array) {
   let index = Math.floor(Math.random() * array.length);
   return index;
 }
 
-let randomIndex = random(questionAndAnswer);
+let randomIndex = random(silhouetteImg);
 console.log(randomIndex);
 
-question.innerHTML = questionAndAnswer[randomIndex].question;
+question.innerHTML = silhouetteImg[randomIndex].question;
 
 // function createCards(img) {
 //   for (let i = 0; i < silhouetteImg.length; i++) {
@@ -105,25 +113,28 @@ question.innerHTML = questionAndAnswer[randomIndex].question;
 // shows imgs
 function createCards(imgArray) {
   for (let i = 0; i < imgArray.length; i++) {
-    imageCards.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
-      imgArray[i].img
-    }" />`;
+    imageCards.innerHTML += `<img class="imgBtn" id="${i}" src="${imgArray[i].img}" />`;
   }
+  addEventListener();
 }
 
 createCards(silhouetteImg);
 
-let imgBtn = document.querySelectorAll('.imgBtn');
-console.log(imgBtn);
-imgBtn.forEach((e) => e.addEventListener('click', onClick));
-
+// add EventListener to imgBtn class
+function addEventListener() {
+  let imgBtn = document.querySelectorAll('.imgBtn');
+  console.log(imgBtn);
+  imgBtn.forEach((e) => e.addEventListener('click', onClick));
+}
 //add EventListener for clicking a card
-function onClick(clicked_id) {
+function onClick(evt) {
   let popupContent = document.getElementById('content');
-  if (clicked_id === questionAndAnswer[randomIndex].correctId) {
+  console.log('target is ', parseInt(evt.target.id));
+  console.log('randomIndex is ', randomIndex);
+  question.innerHTML = '';
+  if (parseInt(evt.target.id) === randomIndex) {
     popupContent.innerHTML = 'Correct Answer!';
     popupToggle();
-    console.log(clicked_id);
     score++;
     console.log('score is ', score);
   } else {
@@ -151,7 +162,7 @@ nextBtn.addEventListener('click', next);
 function next() {
   const nextBtn = document.getElementById('nextBtn');
   nextBtn.addEventListener('click', () => {
-    quizTitle.innerHTML = 'SOUND QUIZ';
+    quizTitle.innerHTML = 'Ghibli QUIZ';
     imageCards.innerHTML = '';
     popup.classList.remove('active');
     if ((currentQuestion = 1)) {
@@ -159,10 +170,11 @@ function next() {
 
       question.innerHTML = 'Which Ghibli movie is this song from?';
       const sound = document.getElementById('sound');
-      sound.innerHTML = `<audio controls><source src="${
-        ghibliSound[random(ghibliSound)].src
-      }" type="audio/wav"></audio>`;
+      randomIndex = random(ghibliSound);
+      console.log('ghibli random is ', randomIndex);
+      sound.innerHTML = `<audio controls><source src="${ghibliSound[randomIndex].src}" type="audio/wav"></audio>`;
       createCards(ghibliSound);
+      addEventListener();
     }
   });
 }
