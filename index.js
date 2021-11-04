@@ -31,25 +31,6 @@ const silhouetteImg = [
   },
 ];
 
-// const questionAndAnswer = [
-//   {
-//     question: 'Which guy is from Death Note?',
-//     correctId: '01',
-//   },
-//   {
-//     question: 'Who is a Shinigami who has a sword named Zangetsu?',
-//     correctId: '02',
-//   },
-//   {
-//     question: 'Who has a name which is a type of topping you put in ramen?',
-//     correctId: '03',
-//   },
-//   {
-//     question: 'Who fights against titans?',
-//     correctId: '04',
-//   },
-// ];
-
 const ghibliSound = [
   {
     src: 'data/hauru.mp3',
@@ -100,15 +81,6 @@ let randomIndex = random(silhouetteImg);
 console.log(randomIndex);
 
 question.innerHTML = silhouetteImg[randomIndex].question;
-
-// function createCards(img) {
-//   for (let i = 0; i < silhouetteImg.length; i++) {
-//     imageCards.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
-//       silhouetteImg[i].img
-//     }" onclick="onClick(this.id)" />`;
-//   }
-// }
-// createCards(imageCards);
 
 // shows imgs
 function createCards(imgArray) {
