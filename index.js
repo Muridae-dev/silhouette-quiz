@@ -1,51 +1,9 @@
-// import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-// import {
-//   getFirestore,
-//   collection,
-//   addDoc,
-//   doc,
-//   deleteDoc,
-//   getDocs,
-// } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
-
-// //Add your own config content
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyARqljuS5yf86OHAp8H1u9q0j6I6m1Scss',
-//   authDomain: 'quiz-01-2c676.firebaseapp.com',
-//   projectId: 'quiz-01-2c676',
-//   storageBucket: 'quiz-01-2c676.appspot.com',
-//   messagingSenderId: '180059847819',
-//   appId: '1:180059847819:web:768ec49d4e155787f9688e',
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore(app);
-
-//Add to firebase
-// async function addAnswer(){
-//   var clickedItem = document.getElementById("01");
-//   if()
-//     try {
-//       const docRef = await addDoc(collection(db, "01"), {
-//         name: name,
-//       });
-//       displayNamesInList("listOfNames");
-//     } catch (e) {
-//       console.error("Error adding document: ", e);
-//     }
-// }
-
-// function readInput(id) {
-//   if (!document.getElementById(id) && !document.getElementById(id).value)
-//     return null;
-
-//   return document.getElementById(id).value;
-// }
-
-const imageCards = document.getElementById('cards');
+const imageCards = document.getElementById('cardsContainer');
 const question = document.getElementById('question');
+const clickImage = document.getElementById('clickImage');
 const quizTitle = document.getElementById('quiz-title');
 const popup = document.getElementById('popup');
+//const body = document.getElementsByTagName('body');
 
 let currentQuestion = 0;
 let score = 0;
@@ -53,68 +11,130 @@ let score = 0;
 const silhouetteImg = [
   {
     id: '01',
-    source: './images/Luke.png',
+    img: './images/Luke.png',
+    question: 'Which guy is from Death Note?',
   },
   {
     id: '02',
-    source: './images/Ichigo.png',
+    img: './images/Ichigo.png',
+    question: 'Who is a Shinigami who has a sword named Zangetsu?',
   },
   {
     id: '03',
-    source: './images/Naruto.png',
+    img: './images/Naruto.png',
+    question: 'Who has a name which is a type of topping you put in ramen?',
   },
   {
     id: '04',
-    source: './images/Yukimaru.png',
+    img: './images/Levi.png',
+    question: 'Who fights against titans?',
   },
 ];
 
-const questionAndAnswer = [
+// const questionAndAnswer = [
+//   {
+//     question: 'Which guy is from Death Note?',
+//     correctId: '01',
+//   },
+//   {
+//     question: 'Who is a Shinigami who has a sword named Zangetsu?',
+//     correctId: '02',
+//   },
+//   {
+//     question: 'Who has a name which is a type of topping you put in ramen?',
+//     correctId: '03',
+//   },
+//   {
+//     question: 'Who fights against titans?',
+//     correctId: '04',
+//   },
+// ];
+
+const ghibliSound = [
   {
-    question: 'Which guy is from Death Note?',
-    correctId: '01',
+    src: 'data/hauru.mp3',
+    movie: 'Hawl',
+    img: './images/hauru.png',
   },
   {
-    question: 'Who is a Shinigami who has a sword named Zangetsu?',
-    correctId: '02',
+    src: 'data/kurenainobuta.mp3',
+    movie: 'Porco Rosso',
+    img: './images/kurenainobuta.png',
   },
   {
-    question: 'Who has a name which is a type of topping you put in ramen?',
-    correctId: '03',
+    src: 'data/laputa.mp3',
+    movie: 'Castle in the Sky',
+    img: './images/laputa.png',
   },
   {
-    question: '?',
-    correctId: '04',
+    src: 'data/majo.mp3',
+    movie: 'Kikis Delivery Service',
+    img: './images/majo.png',
+  },
+  {
+    src: 'data/nausicaa.mp3',
+    movie: 'Nausicaa of the Valley of the Wind',
+    img: './images/nausicaa.png',
+  },
+  {
+    src: 'data/sentochihiro.mp3',
+    movie: 'Spirited Away',
+    img: './images/sentochihiro.png',
+  },
+  {
+    src: 'data/totoro.mp3',
+    movie: 'My Neighbor Totoro',
+    img: './images/totoro.png',
   },
 ];
 
+document.body.style.backgroundColor = '#000';
+
+// Give random index number of array
 function random(array) {
   let index = Math.floor(Math.random() * array.length);
   return index;
 }
 
-let randomIndex = random(questionAndAnswer);
+let randomIndex = random(silhouetteImg);
 console.log(randomIndex);
 
-question.innerHTML = questionAndAnswer[randomIndex].question;
+question.innerHTML = silhouetteImg[randomIndex].question;
 
-function createCards(img) {
-  for (let i = 0; i < silhouetteImg.length; i++) {
-    img.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
-      silhouetteImg[i].source
-    }" onclick="onClick(this.id)" />`;
+// function createCards(img) {
+//   for (let i = 0; i < silhouetteImg.length; i++) {
+//     imageCards.innerHTML += `<img class="imgBtn" id="0${i + 1}" src="${
+//       silhouetteImg[i].img
+//     }" onclick="onClick(this.id)" />`;
+//   }
+// }
+// createCards(imageCards);
+
+// shows imgs
+function createCards(imgArray) {
+  for (let i = 0; i < imgArray.length; i++) {
+    imageCards.innerHTML += `<img class="imgBtn" id="${i}" src="${imgArray[i].img}" />`;
   }
+  addEventListener();
 }
 
-createCards(imageCards);
+createCards(silhouetteImg);
 
+// add EventListener to imgBtn class
+function addEventListener() {
+  let imgBtn = document.querySelectorAll('.imgBtn');
+  console.log(imgBtn);
+  imgBtn.forEach((e) => e.addEventListener('click', onClick));
+}
 //add EventListener for clicking a card
-function onClick(clicked_id) {
+function onClick(evt) {
   let popupContent = document.getElementById('content');
-  if (clicked_id === questionAndAnswer[randomIndex].correctId) {
+  console.log('target is ', parseInt(evt.target.id));
+  console.log('randomIndex is ', randomIndex);
+  question.innerHTML = '';
+  if (parseInt(evt.target.id) === randomIndex) {
     popupContent.innerHTML = 'Correct Answer!';
     popupToggle();
-    console.log(clicked_id);
     score++;
     console.log('score is ', score);
   } else {
@@ -136,19 +156,33 @@ function popupToggle() {
   popup.classList.toggle('active');
 }
 
+// next button generator
+const nextBtn = document.getElementById('nextBtn');
+nextBtn.addEventListener('click', next);
+
+//popup comes up and goes to the next question
 function next() {
   const nextBtn = document.getElementById('nextBtn');
   nextBtn.addEventListener('click', () => {
-    const cardsContainer = document.getElementById('cardsContainer');
-    quizTitle.innerHTML = 'SOUND QUIZ';
-    cardsContainer.innerHTML = '';
+    quizTitle.innerHTML = 'Ghibli Intro QUIZ';
+    imageCards.innerHTML = '';
     popup.classList.remove('active');
-    if (currentQuestion <= 1) {
+    if ((currentQuestion = 1)) {
       console.log('btn clicked');
 
-      question.innerHTML = 'What animal is it?';
+      question.innerHTML = 'Which Ghibli movie is this song from?';
       const sound = document.getElementById('sound');
-      sound.innerHTML = `<audio><source src="data</audio>`;
+      randomIndex = random(ghibliSound);
+      console.log('ghibli random is ', randomIndex);
+      //sound.innerHTML = `<img src = "./images/playBtn.png" onclick="playAudio('./${ghibliSound[randomIndex].src}')">`;
+      sound.innerHTML = `<audio controls><source src="${ghibliSound[randomIndex].src}" type="audio/wav"></audio>`;
+      createCards(ghibliSound);
+      addEventListener();
     }
   });
 }
+
+// function playAudio(url) {
+//   new Audio(url).play();
+//   console.log('clicked play');
+// }
