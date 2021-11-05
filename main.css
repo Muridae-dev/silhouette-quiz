@@ -1,0 +1,12 @@
+html, body {
+    height:100%;
+    padding:0;
+    margin:0;
+}
+
+#textBox {
+    display:block;
+    height:5%;
+    text-align: center;
+    font-size:40px;
+}
